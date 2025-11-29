@@ -1,0 +1,126 @@
+/* Bearming Theme */
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+:root {
+  --font-main: "Atkinson Hyperlegible", sans-serif;
+  --font-secondary: "Inter", sans-serif;
+  --background-color: #ffffff;
+  --accent-color: #e3e3e3;
+  --text-color: #333333;
+  --link-color: #005599;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #002233;
+    --accent-color: #224455;
+    --text-color: #f2f2f2;
+    --link-color: #99ccee;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-font-smoothing: antialiased; }
+
+body {
+  margin: 10px auto;
+  padding: 20px;
+  max-width: 680px;
+  font-family: var(--font-main);
+  font-size: 1.15em;
+  line-height: 1.5;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  word-wrap: break-word;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-secondary); }
+
+main h1 { font-size: 2em; line-height: 1.2; }
+
+.title h1 {
+  display: inline-block;
+  margin: 0 0 5px;
+  font-size: 1.9em;
+  font-weight: 900;
+}
+
+a { color: var(--link-color); text-decoration: underline; }
+
+a.title, .title:hover { color: var(--text-color); text-decoration: none; }
+
+nav {
+  margin: 0 0 30px;
+  font-family: var(--font-secondary);
+}
+
+nav a {
+  margin-right: 6px;
+  padding: 6px 12px;
+  font-size: .8em;
+  color: var(--link-color);
+  border: 1px solid var(--link-color);
+  border-radius: 15px;
+  text-decoration: none;
+}
+
+nav a:hover { background: var(--accent-color); }
+
+time {
+  font-family: var(--font-secondary);
+  font-size: .8em;
+  opacity: 0.8;
+}
+
+hr { border: 1px dashed var(--accent-color); }
+
+blockquote {
+  margin: 25px 0;
+  padding: 2px 25px;
+  font-style: italic;
+  background: var(--accent-color);
+  border-radius: 10px;
+}
+
+ul.blog-posts {
+  margin: 50px 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+ul.blog-posts li {
+  overflow: hidden;
+  padding: 20px 0;
+  border-top: 1px solid var(--accent-color);
+}
+
+ul.blog-posts li:last-child { border-bottom: 1px solid var(--accent-color); }
+
+ul.blog-posts li a {
+  float: left;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 110px);
+}
+
+ul.blog-posts li time {
+  float: right;
+  margin: 3px 0 0;
+}
+
+.code, .highlight {
+  padding: 1px 15px;
+  overflow-x: auto;
+  background-color: var(--accent-color);
+  border-radius: 3px;
+}
+
+footer {
+  padding: 25px 0;
+  font-family: var(--font-secondary);
+  text-align: center;
+  font-size: .8em;
+}
