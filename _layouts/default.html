@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+  <header class="title">
+    <h1><a href="/" class="title">Dude World Wide</a></h1>
+  </header>
+
+  <nav>
+    <p>
+      <a href="/">Home</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/philosophy.html">Philosophy</a>
+    </p>
+  </nav>
+
+  <main>
+    {{ content }}
+  </main>
+
+  <footer>
+    <hr>
+    <p>
+      Made with curiosity and caffeine<br>
+      <a href="https://twitter.com/yourusername">Twitter</a> | 
+      <a href="mailto:your.email@example.com">Email</a>
+    </p>
+  </footer>
+</body>
+</html>
