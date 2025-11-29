@@ -1,0 +1,19 @@
+title: Dude World Wide
+description: Random thoughts from another dude on the internet
+url: "https://dudeworldwide.github.io"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+permalink: /:year/:month/:day/:title/
+
+# Collections
+collections:
+  posts:
+    output: true
+
+# Exclude from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
