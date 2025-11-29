@@ -6,15 +6,12 @@ title: Blog
 <h1>Blog</h1>
 
 <ul class="blog-posts">
-  {% assign blog_posts = site.posts | where: "category", "blog" %}
-  {% if blog_posts.size == 0 %}
-    {% assign blog_posts = site.posts %}
-  {% endif %}
-  
-  {% for post in blog_posts %}
-    <li>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time>
-    </li>
+  {% for post in site.posts %}
+    {% if post.category == "blog" %}
+      <li>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time>
+      </li>
+    {% endif %}
   {% endfor %}
 </ul>
