@@ -1,0 +1,21 @@
+---
+layout: default
+title: Philosophy
+---
+
+<h1>Philosophy</h1>
+
+<ul class="blog-posts">
+  {% assign philosophy_posts = site.posts | where: "category", "philosophy" %}
+  
+  {% if philosophy_posts.size > 0 %}
+    {% for post in philosophy_posts %}
+      <li>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time>
+      </li>
+    {% endfor %}
+  {% else %}
+    <p>No philosophy posts yet. Coming soon...</p>
+  {% endif %}
+</ul>
