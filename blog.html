@@ -7,11 +7,9 @@ title: Blog
 
 <ul class="blog-posts">
   {% for post in site.posts %}
-    {% if post.category == "blog" %}
-      <li>
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time>
-      </li>
-    {% endif %}
+    <li>
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time>
+    </li>
   {% endfor %}
 </ul>
