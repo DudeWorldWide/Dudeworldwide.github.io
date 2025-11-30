@@ -1,22 +1,10 @@
 ---
 layout: default
 ---
-
-<h1>Hello World,</h1>
+<p>Hello World,</p>
 
 <p>I am just another dude on the internet, who likes to try things, think deeply, have fun, and share my random thoughts. Please stop by.</p>
 
 <hr>
 
-<h2>Latest Posts</h2>
-
-<ul class="blog-posts">
-  {% for post in site.posts limit:2 %}
-    <li>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d" }}</time>
-    </li>
-  {% endfor %}
-</ul>
-
-<p><a href="/blog">View all posts →</a></p>
+<p><strong>Latest Posts</strong></p>
