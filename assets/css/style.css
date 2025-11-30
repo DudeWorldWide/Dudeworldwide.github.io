@@ -81,6 +81,14 @@ a.title:hover {
   opacity: 0.6;
 }
 
+.verified-badge {
+  width: 18px;
+  height: 18px;
+  margin-left: 4px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
 /* --- NAVIGATION --- */
 nav {
   font-family: var(--font-main);
