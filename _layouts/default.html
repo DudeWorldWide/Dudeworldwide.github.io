@@ -12,12 +12,12 @@
   </header>
 
   <nav>
-    <p>
-      <a href="/">Home</a>
-      <a href="/blog.html">Blog</a>
-      <a href="/philosophy.html">Philosophy</a>
-    </p>
-  </nav>
+  <p>
+    <a href="{{ '/' | relative_url }}">Home</a>
+    <a href="{{ '/blog.html' | relative_url }}">Blog</a>
+    <a href="{{ '/philosophy.html' | relative_url }}">Philosophy</a>
+  </p>
+</nav>
 
   <main>
     {{ content }}
