@@ -57,8 +57,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 80px;
-  padding-bottom: 30px;
+  margin-bottom: 50px;    /* Reduced from 80px */
+  padding-bottom: 20px;   /* Reduced from 30px */
   border-bottom: 1px solid var(--accent-color);
 }
 
@@ -121,8 +121,8 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-header); 
   font-weight: 700;
   line-height: 1.3;
-  margin-top: 2em;
-  margin-bottom: 0.5em;
+  margin-top: 1em;      /* Reduced from 2em */
+  margin-bottom: 0.3em; /* Reduced from 0.5em */
 }
 
 h1 { font-size: 2.2em; }
@@ -147,7 +147,7 @@ main a:hover {
   text-decoration-color: var(--hover-color);
 }
 
-/* --- BLOG POST LIST (VERTICAL LAYOUT LIKE YOUR EXAMPLE) --- */
+/* --- BLOG POST LIST (DATE ON RIGHT, SIDE-BY-SIDE) --- */
 ul.blog-posts {
   margin: 60px 0;
   list-style: none;
@@ -156,26 +156,28 @@ ul.blog-posts {
 
 ul.blog-posts li {
   display: flex;
-  flex-direction: column; /* Stack vertically: date on top, title below */
-  padding: 24px 0;
+  flex-direction: row;       /* Side-by-side layout */
+  justify-content: space-between; /* Date pushed right */
+  align-items: baseline;     /* Align nicely */
+  padding: 20px 0;           /* Reduced from 24px */
   border-top: 1px solid var(--accent-color);
-  gap: 8px;
+  gap: 20px;
 }
 
 ul.blog-posts li:first-child { 
   border-top: none; 
 }
 
-/* Date styling - appears first */
+/* Date styling - appears on the right */
 ul.blog-posts li time {
   font-family: var(--font-main);
   font-size: 14px;
   color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
-  order: 1; /* Ensure date comes first */
+  white-space: nowrap; /* Prevents date from wrapping */
 }
 
-/* Post title - appears below date */
+/* Post title - appears on the left */
 ul.blog-posts li a {
   font-family: var(--font-header);
   font-size: 22px;
@@ -183,7 +185,7 @@ ul.blog-posts li a {
   color: var(--text-color);
   text-decoration: none;
   transition: color 0.2s ease;
-  order: 2; /* Title comes after date */
+  flex: 1; /* Takes up available space */
 }
 
 ul.blog-posts li a:hover {
