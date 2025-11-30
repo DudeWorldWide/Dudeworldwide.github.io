@@ -1,21 +1,27 @@
 /* Bearming Theme */
-@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
 
+/* --- VARIABLES & FONTS --- */
 :root {
-  --font-main: "Atkinson Hyperlegible", sans-serif;
-  --font-secondary: "Inter", sans-serif;
-  --background-color: #ffffff;
+  /* Classy Font Pairing */
+  --font-main: "Lato", sans-serif;       /* Clean reading font */
+  --font-header: "Playfair Display", serif; /* Editorial/Classy Header font */
+  
+  /* Minimalist Colors (Warm White / Dark Slate) */
+  --background-color: #faf9f6; /* Off-white (Eggshell) - looks more premium than #fff */
   --accent-color: #e3e3e3;
-  --text-color: #333333;
-  --link-color: #005599;
+  --text-color: #2a2a2a;       /* Softer black */
+  --link-color: #333;          /* Neutral link color */
+  --hover-color: #666;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: #002233;
-    --accent-color: #224455;
-    --text-color: #f2f2f2;
-    --link-color: #99ccee;
+    --background-color: #111111; /* Deep rich black */
+    --accent-color: #333333;
+    --text-color: #e0e0e0;
+    --link-color: #ffffff;
+    --hover-color: #aaa;
   }
 }
 
@@ -24,103 +30,118 @@
 html { -webkit-font-smoothing: antialiased; }
 
 body {
-  margin: 10px auto;
+  margin: 40px auto; /* More top margin for breathing room */
   padding: 20px;
-  max-width: 680px;
+  max-width: 720px;  /* Slightly wider for a modern feel */
   font-family: var(--font-main);
-  font-size: 1.15em;
-  line-height: 1.5;
+  font-size: 1.1em;  /* Slightly smaller than 1.15 for elegance */
+  line-height: 1.7;  /* Increased line height for readability */
   color: var(--text-color);
   background-color: var(--background-color);
   word-wrap: break-word;
 }
 
-h1, h2, h3, h4, h5, h6 { font-family: var(--font-secondary); }
+/* --- HEADER LAYOUT (This fixes your main request) --- */
+/* IMPORTANT: Ensure your HTML wraps the Title and Nav 
+   inside a <header> tag for this to work.
+*/
 
-main h1 { font-size: 2em; line-height: 1.2; }
-
-.title h1 {
-  display: inline-block;
-  margin: 0 0 5px;
-  font-size: 1.9em;
-  font-weight: 900;
+header {
+  display: flex;
+  justify-content: space-between; /* Pushes Title left, Nav right */
+  align-items: baseline;          /* Aligns text nicely */
+  margin-bottom: 60px;            /* More space before content starts */
+  border-bottom: 1px solid var(--accent-color); /* Optional: Subtle divider */
+  padding-bottom: 20px;
 }
 
-a { color: var(--link-color); text-decoration: underline; }
+/* Typography Updates */
+h1, h2, h3, h4, h5, h6 { 
+  font-family: var(--font-header); 
+  font-weight: 700;
+  margin-top: 2em;
+}
 
-a.title, .title:hover { color: var(--text-color); text-decoration: none; }
+/* Site Title Styling */
+.title h1 {
+  font-family: var(--font-header);
+  font-size: 1.8em; /* Minimalist size */
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px; /* Tighter tracking looks sharper */
+}
 
+a.title { text-decoration: none; color: var(--text-color); }
+
+/* --- NAVIGATION STYLING --- */
 nav {
-  margin: 0 0 30px;
-  font-family: var(--font-secondary);
+  font-family: var(--font-main);
+  font-size: 0.95em;
+  font-weight: 500;
 }
 
 nav a {
-  margin-right: 6px;
-  padding: 6px 12px;
-  font-size: .8em;
-  color: var(--link-color);
-  border: 1px solid var(--link-color);
-  border-radius: 15px;
+  margin-left: 25px;       /* Space between links */
+  padding: 0;              /* Remove padding */
+  color: var(--text-color);
+  border: none;            /* Remove the "pill" border */
+  border-radius: 0;
   text-decoration: none;
+  opacity: 0.7;            /* Slightly faded by default */
+  transition: opacity 0.2s ease;
 }
 
-nav a:hover { background: var(--accent-color); }
-
-time {
-  font-family: var(--font-secondary);
-  font-size: .8em;
-  opacity: 0.8;
+nav a:hover { 
+  background: transparent; /* Remove background hover */
+  opacity: 1;              /* Full black on hover */
+  text-decoration: underline; 
+  text-underline-offset: 4px; /* Classy gap for underline */
 }
 
-hr { border: 1px dashed var(--accent-color); }
-
-blockquote {
-  margin: 25px 0;
-  padding: 2px 25px;
-  font-style: italic;
-  background: var(--accent-color);
-  border-radius: 10px;
-}
-
+/* --- BLOG LIST MINIMALISM --- */
 ul.blog-posts {
-  margin: 50px 0 20px;
-  padding: 0;
+  margin: 40px 0;
   list-style: none;
+  padding: 0;
 }
 
 ul.blog-posts li {
-  overflow: hidden;
-  padding: 20px 0;
+  display: flex;             /* Align date and title */
+  justify-content: space-between;
+  padding: 15px 0;
   border-top: 1px solid var(--accent-color);
+  border-bottom: none;       /* Clean look */
 }
 
-ul.blog-posts li:last-child { border-bottom: 1px solid var(--accent-color); }
+ul.blog-posts li:first-child { border-top: none; }
 
 ul.blog-posts li a {
-  float: left;
+  font-family: var(--font-header); /* Use serif for post titles */
+  font-size: 1.2em;
+  color: var(--text-color);
   text-decoration: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: calc(100% - 110px);
+  max-width: 80%;
+}
+
+ul.blog-posts li a:hover {
+  color: var(--hover-color);
 }
 
 ul.blog-posts li time {
-  float: right;
-  margin: 3px 0 0;
+  font-family: var(--font-main);
+  font-size: 0.9em;
+  opacity: 0.5;
+  white-space: nowrap;
 }
 
-.code, .highlight {
-  padding: 1px 15px;
-  overflow-x: auto;
-  background-color: var(--accent-color);
-  border-radius: 3px;
-}
+/* Other elements */
+a { color: var(--text-color); text-decoration: underline; text-underline-offset: 3px; }
+hr { border: 1px solid var(--accent-color); opacity: 0.5; margin: 40px 0; }
+blockquote { border-left: 3px solid var(--text-color); padding-left: 20px; font-style: italic; background: none; }
 
 footer {
-  padding: 25px 0;
-  font-family: var(--font-secondary);
+  margin-top: 80px;
+  font-size: 0.8em;
+  opacity: 0.6;
   text-align: center;
-  font-size: .8em;
 }
