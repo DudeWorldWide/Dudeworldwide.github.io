@@ -1,29 +1,30 @@
-/* Minimalist Classy Blog Theme */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Crimson+Pro:wght@400;600&display=swap');
+/* Minimalist Classy Blog Theme - Light Version */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Libre+Baskerville:wght@400;700&display=swap');
 
 /* --- VARIABLES --- */
 :root {
   /* Elegant Font Pairing */
   --font-main: "Inter", -apple-system, system-ui, sans-serif;
-  --font-header: "Crimson Pro", Georgia, serif;
+  --font-header: "Libre Baskerville", Georgia, serif;
   
-  /* Minimalist Palette */
-  --background-color: #fafafa;
+  /* Light Minimalist Palette - ALWAYS LIGHT */
+  --background-color: #fafaf8;
   --accent-color: #e8e8e8;
   --text-color: #1a1a1a;
   --text-secondary: #666;
   --link-color: #1a1a1a;
-  --hover-color: #000;
+  --hover-color: #4a90e2; /* Classy blue for hover */
 }
 
+/* Remove dark mode - force light theme always */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: #0a0a0a;
-    --accent-color: #222;
-    --text-color: #e8e8e8;
-    --text-secondary: #999;
-    --link-color: #e8e8e8;
-    --hover-color: #fff;
+    --background-color: #fafaf8;
+    --accent-color: #e8e8e8;
+    --text-color: #1a1a1a;
+    --text-secondary: #666;
+    --link-color: #1a1a1a;
+    --hover-color: #4a90e2;
   }
 }
 
@@ -118,7 +119,7 @@ nav a:hover::after {
 /* --- TYPOGRAPHY --- */
 h1, h2, h3, h4, h5, h6 { 
   font-family: var(--font-header); 
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.3;
   margin-top: 2em;
   margin-bottom: 0.5em;
@@ -138,14 +139,15 @@ main a {
   text-decoration: underline;
   text-decoration-color: var(--accent-color);
   text-underline-offset: 3px;
-  transition: text-decoration-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 main a:hover {
-  text-decoration-color: var(--text-color);
+  color: var(--hover-color);
+  text-decoration-color: var(--hover-color);
 }
 
-/* --- BLOG POST LIST --- */
+/* --- BLOG POST LIST (VERTICAL LAYOUT LIKE YOUR EXAMPLE) --- */
 ul.blog-posts {
   margin: 60px 0;
   list-style: none;
@@ -154,37 +156,38 @@ ul.blog-posts {
 
 ul.blog-posts li {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 20px 0;
+  flex-direction: column; /* Stack vertically: date on top, title below */
+  padding: 24px 0;
   border-top: 1px solid var(--accent-color);
-  gap: 20px;
+  gap: 8px;
 }
 
 ul.blog-posts li:first-child { 
   border-top: none; 
 }
 
-ul.blog-posts li a {
-  font-family: var(--font-header);
-  font-size: 20px;
-  font-weight: 400;
-  color: var(--text-color);
-  text-decoration: none;
-  flex: 1;
-  transition: color 0.2s ease;
-}
-
-ul.blog-posts li a:hover {
-  color: var(--text-secondary);
-}
-
+/* Date styling - appears first */
 ul.blog-posts li time {
   font-family: var(--font-main);
   font-size: 14px;
   color: var(--text-secondary);
-  white-space: nowrap;
   font-variant-numeric: tabular-nums;
+  order: 1; /* Ensure date comes first */
+}
+
+/* Post title - appears below date */
+ul.blog-posts li a {
+  font-family: var(--font-header);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  order: 2; /* Title comes after date */
+}
+
+ul.blog-posts li a:hover {
+  color: var(--hover-color); /* Blue on hover */
 }
 
 /* --- OTHER ELEMENTS --- */
@@ -254,9 +257,8 @@ footer a:hover {
     margin-right: 20px;
   }
   
-  ul.blog-posts li {
-    flex-direction: column;
-    gap: 8px;
+  ul.blog-posts li a {
+    font-size: 20px;
   }
   
   ul.blog-posts li time {
