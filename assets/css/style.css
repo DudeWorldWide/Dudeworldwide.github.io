@@ -398,83 +398,85 @@ footer a:hover {
 /* --- RESPONSIVE DESIGN --- */
 @media (max-width: 600px) {
   body {
-    padding: 140px 16px 40px;
+    padding: 130px 16px 40px;
   }
   
-  /* Mobile: Vertical stack layout like the original */
+  /* Mobile: Vertical stack layout */
   .header-content {
     padding: 20px 16px;
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
-    position: relative;
+    position: relative; /* Essential for toggle positioning */
+    gap: 10px;
   }
   
-  /* Title row with theme toggle */
+  /* Title section */
   .title {
-    width: calc(100% - 50px); /* Make room for theme toggle */
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    display: block;
+    width: auto;
+    max-width: calc(100% - 50px); /* Leave space for toggle button */
   }
   
   .title h1 {
-    font-size: 28px;
-    white-space: nowrap; /* Prevents "Wide" from breaking to new line */
+    font-size: 26px;
+    white-space: nowrap;
     line-height: 1.2;
+    margin: 0;
   }
   
   .site-header.scrolled .title h1 {
-    font-size: 24px;
+    font-size: 22px;
   }
   
   .verified-badge {
-    width: 18px;
-    height: 18px;
-    margin-left: 6px;
+    width: 17px;
+    height: 17px;
+    margin-left: 5px;
   }
   
   .site-header.scrolled .verified-badge {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
   }
   
-  /* Theme toggle - absolute position in top right */
+  /* THE FIX: Keep header-right in normal flow */
   .header-right {
-    position: absolute;
-    top: 20px;
-    right: 16px;
+    position: static; /* Let it flow naturally below title */
+    width: 100%;
+    display: block;
     gap: 0;
   }
   
-  /* Navigation on separate row below title */
+  /* Navigation sits below title */
   .main-nav {
     width: 100%;
     display: flex;
-    gap: 24px;
-    margin-top: 0;
+    gap: 20px;
     padding-left: 0;
+    margin-top: 5px;
   }
   
   .nav-link {
     font-size: 15px;
-    margin-left: 0;
-    margin-right: 0;
+    margin: 0;
+    padding: 5px 0;
   }
   
-  /* Remove the first nav link's margin */
-  .nav-link:first-child {
-    margin-left: 0;
+  /* THE FIX: Position ONLY the theme toggle button absolutely */
+  .theme-toggle {
+    position: absolute;
+    top: 20px; /* Aligns with title */
+    right: 16px;
   }
   
-  /* Navigation fades out when scrolling on mobile */
+  /* Navigation fades out when scrolling */
   .site-header.scrolled .main-nav {
     opacity: 0;
     pointer-events: none;
     transform: translateY(-5px);
   }
   
-  /* Reduce header padding when scrolled */
+  /* Compact header when scrolled */
   .site-header.scrolled .header-content {
     padding: 15px 16px;
     gap: 0;
