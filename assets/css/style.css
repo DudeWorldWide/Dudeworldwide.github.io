@@ -405,7 +405,7 @@ footer a:hover {
   .header-content {
     padding: 20px 16px;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start; /* Force everything to start from left */
     position: relative; /* Essential for toggle positioning */
     gap: 10px;
   }
@@ -416,6 +416,12 @@ footer a:hover {
     width: auto;
     max-width: calc(100% - 50px); /* Leave space for toggle button */
     text-align: left; /* Keep title on the left */
+    align-self: flex-start; /* Force to left side */
+  }
+  
+  .title-link {
+    display: inline-block;
+    text-align: left;
   }
   
   .title h1 {
@@ -428,6 +434,7 @@ footer a:hover {
   
   .site-header.scrolled .title {
     text-align: left; /* Keep left-aligned when scrolled */
+    align-self: flex-start;
   }
   
   .site-header.scrolled .title h1 {
@@ -483,9 +490,9 @@ footer a:hover {
     transform: translateY(-5px);
   }
   
-  /* Compact header when scrolled */
+  /* Compact header when scrolled - MUCH THINNER */
   .site-header.scrolled .header-content {
-    padding: 15px 16px;
+    padding: 10px 16px; /* Reduced from 15px to 10px for thinner header */
     gap: 0;
   }
   
