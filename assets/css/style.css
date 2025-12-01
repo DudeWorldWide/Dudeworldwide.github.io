@@ -415,6 +415,7 @@ footer a:hover {
     display: block;
     width: auto;
     max-width: calc(100% - 50px); /* Leave space for toggle button */
+    text-align: left; /* Keep title on the left */
   }
   
   .title h1 {
@@ -422,10 +423,16 @@ footer a:hover {
     white-space: nowrap;
     line-height: 1.2;
     margin: 0;
+    text-align: left; /* Ensure text stays left-aligned */
+  }
+  
+  .site-header.scrolled .title {
+    text-align: left; /* Keep left-aligned when scrolled */
   }
   
   .site-header.scrolled .title h1 {
     font-size: 22px;
+    text-align: left; /* Keep DWW on the left when scrolled */
   }
   
   .verified-badge {
