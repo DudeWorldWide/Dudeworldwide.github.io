@@ -75,7 +75,8 @@ body {
 
 /* iOS 18 Glassmorphism when scrolled */
 .site-header.scrolled {
-  background: rgba(250, 250, 248, 0.8);
+  /* UPDATED: More transparent (0.65) for better iOS look */
+  background: rgba(250, 250, 248, 0.65);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(232, 232, 232, 0.6);
@@ -83,7 +84,8 @@ body {
 
 /* Dark theme glassmorphism */
 [data-theme="dark"] .site-header.scrolled {
-  background: rgba(26, 26, 26, 0.8);
+  /* UPDATED: More transparent (0.65) */
+  background: rgba(26, 26, 26, 0.65);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(45, 45, 45, 0.6);
@@ -116,7 +118,7 @@ body {
 .title-full,
 .title-short {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: left center; /* FIX: Anchor animation to the left */
+  transform-origin: left center; /* Anchors animation to the left */
 }
 
 /* Default state: show full, hide short */
@@ -143,14 +145,14 @@ body {
   opacity: 0;
   transform: scale(0.7);
   pointer-events: none;
-  position: absolute; /* FIX: Remove ghost text from layout flow */
+  position: absolute; /* Remove ghost text from layout flow */
   left: 0;
 }
 
 .site-header.scrolled .title-short {
   opacity: 1;
   transform: scale(1);
-  position: relative; /* FIX: Short title takes over the space */
+  position: relative; /* Short title takes over the space */
 }
 
 .site-header.scrolled .title h1 {
@@ -402,47 +404,75 @@ footer a:hover {
   color: var(--hover-color);
 }
 
-/* --- RESPONSIVE DESIGN --- */
+/* --- RESPONSIVE DESIGN (UPDATED: Flex Order Fix) --- */
 @media (max-width: 600px) {
+  
   body {
     padding: 130px 16px 40px;
   }
-  
-  /* Mobile: Vertical stack layout */
+
+  /* 1. THE LAYOUT ENGINE */
   .header-content {
-    padding: 20px 16px;
-    flex-direction: column;
-    align-items: flex-start; /* Force everything to start from left */
-    position: relative; /* Essential for toggle positioning */
-    gap: 10px;
+    padding: 15px 16px; /* Default comfortable padding */
+    display: flex;
+    flex-wrap: wrap; /* Allows the Nav to drop to the next line */
+    align-items: center; /* VERTICAL CENTER: This is the alignment fix */
+    justify-content: space-between;
+    gap: 0;
   }
+
+  /* 2. UNLOCK THE TOGGLE BUTTON */
+  /* This dissolves the container so Nav and Toggle become direct children */
+  .header-right {
+    display: contents; 
+  }
+
+  /* 3. ORDERING ITEMS */
   
-  /* Title section */
+  /* Left: The Title */
   .title {
-    display: flex; /* Better control for alignment */
+    order: 1;
+    flex-grow: 1; /* Takes up available space */
+    display: flex;
     align-items: center;
-    width: auto;
-    max-width: calc(100% - 50px); /* Leave space for toggle */
-    /* NO fixed height - let it adapt naturally */
+    /* Explicit height matches toggle for perfect baseline alignment */
+    height: 36px; 
   }
   
+  /* Right: The Toggle */
+  .theme-toggle {
+    order: 2;
+    position: static; /* No absolute positioning needed anymore */
+    margin: 0;
+    height: 36px; 
+    width: 36px;
+  }
+
+  /* Bottom: The Navigation */
+  .main-nav {
+    order: 3;
+    width: 100%; /* Forces a new line */
+    margin-top: 15px; /* Distance from the Title/Toggle row */
+    padding-left: 0;
+    display: flex;
+    gap: 20px;
+    
+    /* Animation setup for fading out */
+    transition: opacity 0.3s ease, margin 0.3s ease, max-height 0.3s ease;
+    opacity: 1;
+    max-height: 50px; /* Approximate height of nav */
+    overflow: hidden;
+  }
+
+  /* --- TEXT SIZING --- */
   .title-link {
-    display: inline-block;
-    position: relative; /* Essential container for title swap */
-    text-align: left;
+    line-height: 1;
   }
-  
+
   .title h1 {
     font-size: 26px;
+    line-height: 1;
     margin: 0;
-    text-align: left;
-    display: block;
-    line-height: 1.2;
-    white-space: nowrap;
-  }
-  
-  .site-header.scrolled .title h1 {
-    font-size: 22px;
   }
   
   .verified-badge {
@@ -451,59 +481,37 @@ footer a:hover {
     margin-left: 5px;
   }
   
+  .nav-link {
+    font-size: 15px;
+    padding: 5px 0;
+  }
+
+  /* --- SCROLLING BEHAVIOR --- */
+  
+  /* Step 1: Shrink the container padding */
+  .site-header.scrolled .header-content {
+    padding: 10px 16px;
+  }
+  
+  /* Step 2: Hide the Navigation completely */
+  .site-header.scrolled .main-nav {
+    opacity: 0;
+    pointer-events: none;
+    margin-top: 0;
+    max-height: 0; /* Smoothly collapses the space */
+  }
+
+  /* Step 3: Resize Title Text */
+  .site-header.scrolled .title h1 {
+    font-size: 22px;
+  }
+  
+  /* Step 4: Adjust Badge */
   .site-header.scrolled .verified-badge {
     width: 15px;
     height: 15px;
   }
   
-  /* THE FIX: Keep header-right in normal flow */
-  .header-right {
-    position: static; /* Let it flow naturally below title */
-    width: 100%;
-    display: block;
-    gap: 0;
-  }
-  
-  /* Navigation sits below title */
-  .main-nav {
-    width: 100%;
-    display: flex;
-    gap: 20px;
-    padding-left: 0;
-    margin-top: 5px;
-  }
-  
-  .nav-link {
-    font-size: 15px;
-    margin: 0;
-    padding: 5px 0;
-  }
-  
-  /* THE FIX: Position ONLY the theme toggle button absolutely */
-  .theme-toggle {
-    position: absolute;
-    top: 20px; /* Aligns with title */
-    right: 16px;
-  }
-  
-  /* Navigation fades out when scrolling */
-  .site-header.scrolled .main-nav {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-5px);
-  }
-  
-  /* Compact header when scrolled - MUCH THINNER */
-  .site-header.scrolled .header-content {
-    padding: 10px 16px; /* Reduced from 15px to 10px for thinner header */
-    gap: 0;
-  }
-  
-  ul.blog-posts li a {
-    font-size: 20px;
-  }
-  
-  ul.blog-posts li time {
-    font-size: 13px;
-  }
+  ul.blog-posts li a { font-size: 20px; }
+  ul.blog-posts li time { font-size: 13px; }
 }
