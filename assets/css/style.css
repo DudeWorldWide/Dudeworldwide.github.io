@@ -398,69 +398,86 @@ footer a:hover {
 /* --- RESPONSIVE DESIGN --- */
 @media (max-width: 600px) {
   body {
-    padding: 120px 16px 40px;
+    padding: 140px 16px 40px;
   }
   
-  /* Mobile: Stack layout with proper spacing */
+  /* Mobile: Vertical stack layout like the original */
   .header-content {
-    padding: 15px 16px;
+    padding: 20px 16px;
     flex-direction: column;
     align-items: flex-start;
-    gap: 15px;
+    gap: 20px;
+    position: relative;
   }
   
-  /* Top row: Title on left, theme toggle on right */
+  /* Title row with theme toggle */
   .title {
-    width: 100%;
+    width: calc(100% - 50px); /* Make room for theme toggle */
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: flex-start;
   }
   
   .title h1 {
-    font-size: 24px;
+    font-size: 28px;
+    white-space: nowrap; /* Prevents "Wide" from breaking to new line */
+    line-height: 1.2;
   }
   
   .site-header.scrolled .title h1 {
-    font-size: 22px;
+    font-size: 24px;
   }
   
   .verified-badge {
-    width: 16px;
-    height: 16px;
-    margin-left: 4px;
+    width: 18px;
+    height: 18px;
+    margin-left: 6px;
   }
   
   .site-header.scrolled .verified-badge {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
   }
   
-  /* Move theme toggle to same row as title on mobile */
+  /* Theme toggle - absolute position in top right */
   .header-right {
     position: absolute;
-    top: 15px;
+    top: 20px;
     right: 16px;
     gap: 0;
   }
   
-  /* Navigation on second row */
+  /* Navigation on separate row below title */
   .main-nav {
     width: 100%;
     display: flex;
-    gap: 20px;
+    gap: 24px;
     margin-top: 0;
+    padding-left: 0;
   }
   
   .nav-link {
     font-size: 15px;
+    margin-left: 0;
+    margin-right: 0;
   }
   
-  /* Navigation fades out when scrolling on mobile too */
+  /* Remove the first nav link's margin */
+  .nav-link:first-child {
+    margin-left: 0;
+  }
+  
+  /* Navigation fades out when scrolling on mobile */
   .site-header.scrolled .main-nav {
     opacity: 0;
     pointer-events: none;
     transform: translateY(-5px);
+  }
+  
+  /* Reduce header padding when scrolled */
+  .site-header.scrolled .header-content {
+    padding: 15px 16px;
+    gap: 0;
   }
   
   ul.blog-posts li a {
