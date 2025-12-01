@@ -25,8 +25,6 @@
   --hover-color: #6fa3ef;           /* Claude's blue accent */
 }
 
-/* Remove the old @media (prefers-color-scheme: dark) block completely */
-
 /* --- BASE STYLES --- */
 *, *::before, *::after { 
   box-sizing: border-box; 
@@ -39,7 +37,7 @@ html {
 
 body {
   margin: 0;
-  padding: 60px 20px;
+  padding: 60px 20px; /* Note: specific padding-top is handled in header section below */
   max-width: 680px;
   margin-left: auto;
   margin-right: auto;
@@ -49,79 +47,200 @@ body {
   line-height: 1.65;
   color: var(--text-color);
   background-color: var(--background-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- HEADER LAYOUT --- */
-header {
+/* =========================================
+   NEW FIXED HEADER WITH GLASSMORPHISM
+   ========================================= */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--background-color);
+  border-bottom: 1px solid var(--accent-color);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header-content {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 50px;    /* Reduced from 80px */
-  padding-bottom: 20px;   /* Reduced from 30px */
-  border-bottom: 1px solid var(--accent-color);
 }
 
-/* Site Title */
+/* iOS 18 Glassmorphism when scrolled */
+.site-header.scrolled {
+  background: rgba(250, 250, 248, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(232, 232, 232, 0.6);
+}
+
+/* Dark theme glassmorphism */
+[data-theme="dark"] .site-header.scrolled {
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(45, 45, 45, 0.6);
+}
+
+/* Add padding to body so content isn't hidden under fixed header */
+body {
+  padding-top: 100px;
+}
+
+/* Header Right Side */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.4s ease;
+}
+
+/* Hide nav when scrolled */
+.site-header.scrolled .main-nav {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+}
+
+/* Title Animations */
 .title h1 {
+  margin: 0;
   font-family: var(--font-header);
   font-size: 28px;
   font-weight: 400;
-  margin: 0;
   letter-spacing: 0.5px;
 }
 
-a.title { 
-  text-decoration: none; 
+.title-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
   color: var(--text-color);
-  transition: opacity 0.2s ease;
 }
 
-a.title:hover {
-  opacity: 0.6;
+.title-full,
+.title-short {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.verified-badge {
-  width: 18px;
-  height: 18px;
-  margin-left: 4px;
-  vertical-align: middle;
+/* Default state: show full, hide short */
+.title-full {
+  opacity: 1;
+  transform: scale(1);
   display: inline-block;
 }
 
-/* --- NAVIGATION --- */
-nav {
-  font-family: var(--font-main);
-  font-size: 15px;
-  font-weight: 400;
+.title-short {
+  opacity: 0;
+  transform: scale(0.8);
+  position: absolute;
+  left: 0;
+  display: inline-block;
 }
 
-nav a {
-  margin-left: 28px;
+/* Scrolled state: hide full, show short */
+.site-header.scrolled .title-full {
+  opacity: 0;
+  transform: scale(0.7);
+  pointer-events: none;
+}
+
+.site-header.scrolled .title-short {
+  opacity: 1;
+  transform: scale(1);
+  position: relative;
+}
+
+/* Verified badge adjusts with title */
+.verified-badge {
+  width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  vertical-align: middle;
+  transition: all 0.3s ease;
+}
+
+.site-header.scrolled .verified-badge {
+  width: 16px;
+  height: 16px;
+}
+
+/* Navigation */
+.main-nav {
+  display: flex;
+  gap: 28px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  font-family: var(--font-main);
+}
+
+.nav-link {
   color: var(--text-secondary);
   text-decoration: none;
   transition: color 0.2s ease;
   position: relative;
+  font-size: 15px;
 }
 
-nav a:hover { 
+.nav-link:hover {
   color: var(--hover-color);
 }
 
-/* Optional: Subtle underline on hover */
-nav a::after {
+/* Active page highlighting */
+.nav-link.active {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.nav-link.active::after {
   content: '';
   position: absolute;
   bottom: -3px;
   left: 0;
-  width: 0;
-  height: 1px;
-  background-color: var(--hover-color);
-  transition: width 0.2s ease;
+  right: 0;
+  height: 2px;
+  background: var(--hover-color);
 }
 
-nav a:hover::after {
-  width: 100%;
+/* Theme toggle stays visible */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
 }
+
+.theme-toggle:hover {
+  background: var(--accent-color);
+  transform: rotate(20deg);
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* =========================================
+   END HEADER CODE / START MAIN CONTENT
+   ========================================= */
 
 /* --- TYPOGRAPHY --- */
 h1, h2, h3, h4, h5, h6 { 
@@ -249,23 +368,30 @@ footer a:hover {
   color: var(--hover-color);
 }
 
-/* --- RESPONSIVE DESIGN --- */
+/* --- RESPONSIVE DESIGN (UPDATED) --- */
 @media (max-width: 600px) {
+  /* New Header Mobile Styles */
+  .header-content {
+    padding: 15px 16px;
+  }
+  
   body {
-    padding: 40px 16px;
+    padding-top: 80px; /* Adjust body padding for mobile header height */
   }
   
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
+  .main-nav {
+    gap: 16px;
   }
   
-  nav a {
-    margin-left: 0;
-    margin-right: 20px;
+  .nav-link {
+    font-size: 14px;
   }
   
+  .header-right {
+    gap: 12px;
+  }
+
+  /* Existing Mobile Styles for Content */
   ul.blog-posts li a {
     font-size: 20px;
   }
@@ -275,97 +401,9 @@ footer a:hover {
   }
 }
 
-/* --- AUTO-HIDING HEADER ON MOBILE --- */
-@media (max-width: 600px) {
-  header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: var(--background-color);
-    z-index: 1000;
-    transition: transform 0.3s ease;
-    padding: 15px 20px;
-    margin-bottom: 0;
-  }
-  
-  /* Hide header when scrolling down */
-  header.hidden {
-    transform: translateY(-100%);
-  }
-  
-  /* Add space at top so content isn't hidden */
-  body {
-    padding-top: 100px;
-  }
-}
-/* --- THEME TOGGLE BUTTON --- */
-.theme-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-color);
-  transition: all 0.3s ease;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-}
-
-.theme-toggle:hover {
-  background: var(--accent-color);
-  transform: rotate(20deg);
-}
-
-.theme-toggle svg {
-  width: 20px;
-  height: 20px;
-}
-
-/* Smooth transition for theme changes */
-body {
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-* {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-/* Smooth greeting transition */
+/* Smooth greeting transition (Keep this if used in HTML) */
 #greeting {
   transition: opacity 0.3s ease;
   display: inline-block;
   min-width: 100px;
-}
-
-/* --- SCROLLING HEADER ANIMATION --- */
-.title-short {
-  display: none;
-}
-
-.title-full {
-  display: inline;
-}
-
-.scrolled .title-short {
-  display: inline;
-}
-
-.scrolled .title-full {
-  display: none;
-}
-
-.title h1 a {
-  transition: all 0.3s ease;
-}
-
-.scrolled header {
-  padding-bottom: 15px;
-}
-
-.scrolled .title h1 {
-  font-size: 24px;
 }
