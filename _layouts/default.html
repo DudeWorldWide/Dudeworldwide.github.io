@@ -66,19 +66,41 @@
 
   <!-- Header Scroll Shrink Script -->
   <script>
-    // Header shrink on scroll
-    const header = document.querySelector('header');
+  // Fixed header with glassmorphism on scroll
+  const header = document.querySelector('.site-header');
+  let lastScrollTop = 0;
+  
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      
-      if (scrollTop > 100) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    });
-  </script>
+    if (scrollTop > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+    
+    lastScrollTop = scrollTop;
+  });
+  
+  // Highlight active page in navigation
+  const currentPage = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav-link');
+  
+  navLinks.forEach(link => {
+    const linkPath = link.getAttribute('href');
+    
+    // Check if current page matches link
+    if (currentPage === linkPath || 
+        currentPage.includes(linkPath) && linkPath !== '/') {
+      link.classList.add('active');
+    }
+    
+    // Handle homepage
+    if (currentPage === '/' && linkPath === '/') {
+      link.classList.add('active');
+    }
+  });
+</script>
 
   <!-- Theme Toggle Script -->
   <script>
