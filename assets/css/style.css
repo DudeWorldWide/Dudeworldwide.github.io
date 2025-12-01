@@ -1,32 +1,31 @@
 /* Minimalist Classy Blog Theme - Light Version */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Libre+Baskerville:wght@400;700&display=swap');
 
-/* --- VARIABLES --- */
+/* --- VARIABLES & FONTS --- */
 :root {
-  /* Elegant Font Pairing */
+  /* Light Theme (Default) */
   --font-main: "Inter", -apple-system, system-ui, sans-serif;
   --font-header: "Libre Baskerville", Georgia, serif;
   
-  /* Light Minimalist Palette - ALWAYS LIGHT */
   --background-color: #fafaf8;
   --accent-color: #e8e8e8;
   --text-color: #1a1a1a;
   --text-secondary: #666;
   --link-color: #1a1a1a;
-  --hover-color: #4a90e2; /* Classy blue for hover */
+  --hover-color: #4a90e2;
 }
 
-/* Remove dark mode - force light theme always */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background-color: #fafaf8;
-    --accent-color: #e8e8e8;
-    --text-color: #1a1a1a;
-    --text-secondary: #666;
-    --link-color: #1a1a1a;
-    --hover-color: #4a90e2;
-  }
+/* Dark Theme - Claude.ai Colors */
+[data-theme="dark"] {
+  --background-color: #1a1a1a;      /* Claude's dark background */
+  --accent-color: #2d2d2d;          /* Claude's border color */
+  --text-color: #e8e8e8;            /* Claude's text color */
+  --text-secondary: #9b9b9b;        /* Claude's secondary text */
+  --link-color: #e8e8e8;
+  --hover-color: #6fa3ef;           /* Claude's blue accent */
 }
+
+/* Remove the old @media (prefers-color-scheme: dark) block completely */
 
 /* --- BASE STYLES --- */
 *, *::before, *::after { 
@@ -299,4 +298,38 @@ footer a:hover {
   body {
     padding-top: 100px;
   }
+}
+/* --- THEME TOGGLE BUTTON --- */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+}
+
+.theme-toggle:hover {
+  background: var(--accent-color);
+  transform: rotate(20deg);
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Smooth transition for theme changes */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
