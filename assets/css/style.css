@@ -398,19 +398,31 @@ footer a:hover {
 /* --- RESPONSIVE DESIGN --- */
 @media (max-width: 600px) {
   body {
-    padding: 80px 16px 40px;
+    padding: 120px 16px 40px;
   }
   
+  /* Mobile: Stack layout with proper spacing */
   .header-content {
     padding: 15px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  /* Top row: Title on left, theme toggle on right */
+  .title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   
   .title h1 {
-    font-size: 22px;
+    font-size: 24px;
   }
   
   .site-header.scrolled .title h1 {
-    font-size: 20px;
+    font-size: 22px;
   }
   
   .verified-badge {
@@ -424,16 +436,31 @@ footer a:hover {
     height: 14px;
   }
   
+  /* Move theme toggle to same row as title on mobile */
+  .header-right {
+    position: absolute;
+    top: 15px;
+    right: 16px;
+    gap: 0;
+  }
+  
+  /* Navigation on second row */
   .main-nav {
-    gap: 16px;
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    margin-top: 0;
   }
   
   .nav-link {
-    font-size: 14px;
+    font-size: 15px;
   }
   
-  .header-right {
-    gap: 12px;
+  /* Navigation fades out when scrolling on mobile too */
+  .site-header.scrolled .main-nav {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-5px);
   }
   
   ul.blog-posts li a {
