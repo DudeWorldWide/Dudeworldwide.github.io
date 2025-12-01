@@ -1,10 +1,51 @@
 ---
 layout: default
 ---
-<p>Hello World,👋 </p>
+<p style="font-size: 1.3em;"><span id="greeting">Hello</span> 👋</p>
 
-<p>I am just another Dude on the internet, who likes to try things, think deeply, share my random thoughts, and most importantly have absolute fun in life. Thanks for stopping by, hope you have some fun time read through. See ya....</p>
+<p>I am just another dude on the internet, who likes to try things, think deeply, have fun, and share my random thoughts. Please stop by.</p>
 
 <hr>
 
 <p><a href="{{ '/blog' | relative_url }}">Latest Posts</a></p>
+
+<script>
+  const greetings = [
+    "Hello",      // English
+    "Hola",       // Spanish
+    "Bonjour",    // French
+    "Ciao",       // Italian
+    "Hallo",      // German
+    "Olá",        // Portuguese
+    "Привет",     // Russian
+    "こんにちは",  // Japanese
+    "你好",       // Chinese
+    "안녕하세요",  // Korean
+    "مرحبا",      // Arabic
+    "Namaste",    // Hindi
+    "Sawubona",   // Zulu
+    "Jambo",      // Swahili
+    "Hej",        // Swedish
+    "Merhaba",    // Turkish
+    "Shalom",     // Hebrew
+    "Γεια σου",   // Greek
+    "Salut",      // Romanian
+    "Hoi"         // Dutch
+  ];
+
+  let currentIndex = 0;
+  const greetingElement = document.getElementById('greeting');
+
+  function rotateGreeting() {
+    greetingElement.style.opacity = '0';
+    
+    setTimeout(() => {
+      currentIndex = (currentIndex + 1) % greetings.length;
+      greetingElement.textContent = greetings[currentIndex];
+      greetingElement.style.opacity = '1';
+    }, 300);
+  }
+
+  // Start rotating after 3 seconds
+  setInterval(rotateGreeting, 3000);
+</script>
