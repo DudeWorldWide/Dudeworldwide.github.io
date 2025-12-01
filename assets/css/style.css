@@ -96,6 +96,7 @@ body {
   font-weight: 400;
   margin: 0;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .title-link {
@@ -156,6 +157,7 @@ body {
   vertical-align: middle;
   display: inline-block;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .site-header.scrolled .verified-badge {
@@ -401,6 +403,25 @@ footer a:hover {
   
   .header-content {
     padding: 15px 16px;
+  }
+  
+  .title h1 {
+    font-size: 22px;
+  }
+  
+  .site-header.scrolled .title h1 {
+    font-size: 20px;
+  }
+  
+  .verified-badge {
+    width: 16px;
+    height: 16px;
+    margin-left: 4px;
+  }
+  
+  .site-header.scrolled .verified-badge {
+    width: 14px;
+    height: 14px;
   }
   
   .main-nav {
