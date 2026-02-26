@@ -1,9 +1,11 @@
-/* Minimalist Classy Blog Theme - Dude World Wide Edition */
+/* Minimalist Classy Blog Theme - Light Version */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Libre+Baskerville:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Libre+Baskerville:wght@400;700&display=swap');
 
-/* --- VARIABLES --- */
+/* --- VARIABLES & FONTS --- */
+
 :root {
+  /* Light Theme (Default) */
   --font-main: "Inter", -apple-system, system-ui, sans-serif;
   --font-header: "Libre Baskerville", Georgia, serif;
   
@@ -15,270 +17,501 @@
   --hover-color: #4a90e2;
 }
 
+/* Dark Theme - Claude.ai Colors */
 [data-theme="dark"] {
-  --background-color: #1a1a1a;      
-  --accent-color: #2d2d2d;          
-  --text-color: #e8e8e8;            
-  --text-secondary: #9b9b9b;        
+  --background-color: #1a1a1a;      /* Claude's dark background */
+  --accent-color: #2d2d2d;          /* Claude's border color */
+  --text-color: #e8e8e8;            /* Claude's text color */
+  --text-secondary: #9b9b9b;        /* Claude's secondary text */
   --link-color: #e8e8e8;
-  --hover-color: #6fa3ef;           
+  --hover-color: #6fa3ef;           /* Claude's blue accent */
 }
 
 /* --- BASE STYLES --- */
-*, *::before, *::after { box-sizing: border-box; }
-html { -webkit-font-smoothing: antialiased; }
+*, *::before, *::after { 
+  box-sizing: border-box; 
+}
+
+html { 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 body {
-  margin: 0; padding: 100px 20px 60px;
-  max-width: 680px; margin-left: auto; margin-right: auto;
-  font-family: var(--font-main); font-size: 17px; font-weight: 400;
-  line-height: 1.65; color: var(--text-color);
+  margin: 0;
+  padding: 100px 20px 60px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: var(--font-main);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--text-color);
   background-color: var(--background-color);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- HEADER --- */
+/* --- FIXED HEADER WITH GLASSMORPHISM --- */
 .site-header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background: var(--background-color);
   border-bottom: 1px solid var(--accent-color);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .header-content {
-  max-width: 680px; margin: 0 auto; padding: 20px;
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: nowrap;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Glassmorphism */
+/* iOS 18 Glassmorphism when scrolled */
 .site-header.scrolled {
+  /* UPDATED: More transparent (0.65) for better iOS look */
   background: rgba(250, 250, 248, 0.65);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(232, 232, 232, 0.6);
 }
+
+/* Dark theme glassmorphism */
 [data-theme="dark"] .site-header.scrolled {
+  /* UPDATED: More transparent (0.65) */
   background: rgba(26, 26, 26, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(45, 45, 45, 0.6);
 }
 
-/* ============================================================
-   TITLE ANIMATION: "Dude World Wide" → "DWW"
-   
-   Each word is split into:
-     .t-init  → the capital letter (D, W, W) — always visible
-     .t-rest  → the remainder (ude, orld, ide) — slides left & fades out
-   
-   HTML structure required:
-   <h1>
-     <span class="t-word"><span class="t-init">D</span><span class="t-rest">ude</span></span>
-     <span class="t-gap"> </span>
-     <span class="t-word"><span class="t-init">W</span><span class="t-rest">orld</span></span>
-     <span class="t-gap"> </span>
-     <span class="t-word"><span class="t-init">W</span><span class="t-rest">ide</span></span>
-   </h1>
-   ============================================================ */
-
+/* Site Title */
 .title h1 {
-  font-family: var(--font-header); font-size: 28px; font-weight: 400;
-  margin: 0; letter-spacing: 0.5px;
-  display: flex; align-items: baseline; gap: 0;
+  font-family: var(--font-header);
+  font-size: 28px;
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: 0.5px;
   white-space: nowrap;
 }
 
 .title-link {
-  position: relative; display: inline-flex; align-items: center;
-  text-decoration: none; color: var(--text-color); transition: opacity 0.2s ease;
-}
-.title-link:hover { opacity: 0.6; }
-
-/* Each word container — keeps initial + tail together */
-.t-word {
+  position: relative;
   display: inline-flex;
-  align-items: baseline;
-  overflow: hidden; /* Clips the tail as it slides out */
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: opacity 0.2s ease;
 }
 
-/* The capital initial letter — never moves */
-.t-init {
+.title-link:hover {
+  opacity: 0.6;
+}
+
+/* Title Animations */
+.title-full,
+.title-short {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left center; /* Anchors animation to the left */
+}
+
+/* Default state: show full, hide short */
+.title-full {
+  opacity: 1;
+  transform: scale(1);
+  position: relative; /* Holds space naturally */
   display: inline-block;
+  white-space: nowrap;
+}
+
+.title-short {
+  opacity: 0;
+  transform: scale(0.8);
+  position: absolute; /* Hidden behind full title */
+  left: 0;
+  top: 0;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Scrolled state: hide full, show short */
+.site-header.scrolled .title-full {
+  opacity: 0;
+  transform: scale(0.7);
+  pointer-events: none;
+  position: absolute; /* Remove ghost text from layout flow */
+  left: 0;
+}
+
+.site-header.scrolled .title-short {
+  opacity: 1;
+  transform: scale(1);
+  position: relative; /* Short title takes over the space */
+}
+
+.site-header.scrolled .title h1 {
+  font-size: 24px;
+}
+
+.verified-badge {
+  width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  vertical-align: middle;
+  display: inline-block;
+  transition: all 0.3s ease;
   flex-shrink: 0;
 }
 
-/* The tail letters — this is what slides left and disappears */
-.t-rest {
-  display: inline-block;
-  overflow: hidden;
-  /* max-width large enough to never clip the full text */
-  max-width: 120px;
-  opacity: 1;
-  /* 
-    Two simultaneous transitions:
-      max-width: collapses the space (word "slides into" its initial)
-      opacity: fades it out as it compresses
-    Stagger via transition-delay on each word (see below)
-  */
-  transition:
-    max-width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity   0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* The space between words */
-.t-gap {
-  display: inline-block;
-  overflow: hidden;
-  max-width: 10px; /* Normal space width */
-  opacity: 1;
-  transition:
-    max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity   0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ---- SCROLLED STATE: collapse each word's tail ---- */
-
-/* "ude" collapses first */
-.site-header.scrolled .t-word:nth-child(1) .t-rest {
-  max-width: 0;
-  opacity: 0;
-  transition-delay: 0s;
-}
-
-/* Space after "Dude" collapses slightly after */
-.site-header.scrolled .t-gap:nth-child(2) {
-  max-width: 4px; /* Keeps a tiny gap between D W W */
-  opacity: 0.4;
-  transition-delay: 0.04s;
-}
-
-/* "orld" collapses second */
-.site-header.scrolled .t-word:nth-child(3) .t-rest {
-  max-width: 0;
-  opacity: 0;
-  transition-delay: 0.07s;
-}
-
-/* Space after "World" */
-.site-header.scrolled .t-gap:nth-child(4) {
-  max-width: 4px;
-  opacity: 0.4;
-  transition-delay: 0.1s;
-}
-
-/* "ide" collapses last */
-.site-header.scrolled .t-word:nth-child(5) .t-rest {
-  max-width: 0;
-  opacity: 0;
-  transition-delay: 0.13s;
-}
-
-/* Verified badge (if you use one) */
-.verified-badge {
-  width: 18px; height: 18px; margin-left: 6px;
-  vertical-align: middle; display: inline-block; flex-shrink: 0;
-  transition: all 0.3s ease;
-}
 .site-header.scrolled .verified-badge {
-  width: 15px; height: 15px;
+  width: 16px;
+  height: 16px;
 }
 
-/* Navigation Container */
-.header-right { display: flex; align-items: center; gap: 20px; }
+/* Header Right Side */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.4s ease;
+}
+
+/* --- NAVIGATION --- */
 .main-nav {
-  display: flex; gap: 28px;
-  font-family: var(--font-main); font-size: 15px;
+  font-family: var(--font-main);
+  font-size: 15px;
+  font-weight: 400;
+  display: flex;
+  gap: 28px;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Hide nav when scrolled (desktop) */
+/* Hide nav when scrolled */
 .site-header.scrolled .main-nav {
   opacity: 0;
   pointer-events: none;
   transform: translateX(10px);
+  transition: all 0.3s ease;
 }
 
-/* Nav Links */
 .nav-link {
-  color: var(--text-secondary); text-decoration: none;
-  transition: color 0.2s ease; 
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
   position: relative;
 }
-.nav-link:hover { color: var(--hover-color); font-weight: 700; }
+
+.nav-link:hover { 
+  color: var(--hover-color);
+}
+
+/* Optional: Subtle underline on hover */
 .nav-link::after {
-  content: ''; 
-  position: absolute; bottom: -3px; left: 0; width: 0; height: 1px;
-  background-color: var(--hover-color); transition: width 0.2s ease;
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--hover-color);
+  transition: width 0.2s ease;
 }
-.nav-link:hover::after { width: 100%; }
-.nav-link.active { color: var(--text-color); font-weight: 500; }
-.nav-link.active::after { width: 100%; }
 
-/* Toggle */
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Active page highlighting */
+.nav-link.active {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--hover-color);
+  width: 100%;
+}
+
+/* --- THEME TOGGLE BUTTON --- */
 .theme-toggle {
-  background: none; border: none; cursor: pointer; padding: 8px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text-color); transition: all 0.3s ease;
-  border-radius: 50%; width: 36px; height: 36px; flex-shrink: 0;
-}
-.theme-toggle:hover { background: var(--accent-color); transform: rotate(20deg); }
-.theme-toggle svg { width: 20px; height: 20px; }
-
-/* --- CONTENT --- */
-h1, h2, h3 { font-family: var(--font-header); font-weight: 700; line-height: 1.3; margin-top: 1em; }
-p { margin: 1.2em 0; }
-a { color: var(--text-color); text-decoration: underline; text-decoration-color: var(--accent-color); text-underline-offset: 3px; }
-a:hover { color: var(--hover-color); text-decoration-color: var(--hover-color); }
-
-/* --- HOMEPAGE LAYOUT --- */
-.bottom-nav-grid {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 80px;
-    font-family: var(--font-header);
-    font-size: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
 }
 
-/* Footer */
-footer { margin-top: 120px; padding-top: 40px; border-top: 1px solid var(--accent-color); font-size: 14px; color: var(--text-secondary); text-align: center; }
+.theme-toggle:hover {
+  background: var(--accent-color);
+  transform: rotate(20deg);
+}
 
-/* MathJax */
-.MathJax_Display { overflow-x: auto; overflow-y: hidden; }
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+}
 
-/* ============================================================
-   MOBILE — max-width: 600px
-   Only show: [Dude World Wide → DWW]  ...  [🌙]
-   Nav links hidden. Tap title → goes home.
-   ============================================================ */
+/* Smooth greeting transition */
+#greeting {
+  transition: opacity 0.3s ease;
+  display: inline-block;
+  min-width: 100px;
+}
+
+/* --- TYPOGRAPHY --- */
+h1, h2, h3, h4, h5, h6 { 
+  font-family: var(--font-header); 
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
+}
+
+h1 { font-size: 2.2em; }
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.4em; }
+
+p { 
+  margin: 1.2em 0; 
+}
+
+/* --- LINKS --- */
+main a { 
+  color: var(--text-color); 
+  text-decoration: underline;
+  text-decoration-color: var(--accent-color);
+  text-underline-offset: 3px;
+  transition: all 0.2s ease;
+}
+
+main a:hover {
+  color: var(--hover-color);
+  text-decoration-color: var(--hover-color);
+}
+
+/* --- BLOG POST LIST (DATE ON RIGHT, SIDE-BY-SIDE) --- */
+ul.blog-posts {
+  margin: 60px 0;
+  list-style: none;
+  padding: 0;
+}
+
+ul.blog-posts li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 20px 0;
+  border-top: 1px solid var(--accent-color);
+  gap: 20px;
+}
+
+ul.blog-posts li:first-child { 
+  border-top: none; 
+}
+
+/* Date styling - appears on the right */
+ul.blog-posts li time {
+  font-family: var(--font-main);
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Post title - appears on the left */
+ul.blog-posts li a {
+  font-family: var(--font-header);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  flex: 1;
+}
+
+ul.blog-posts li a:hover {
+  color: var(--hover-color);
+}
+
+/* --- OTHER ELEMENTS --- */
+hr { 
+  border: none;
+  border-top: 1px solid var(--accent-color);
+  margin: 60px 0;
+}
+
+blockquote { 
+  border-left: 2px solid var(--accent-color);
+  padding-left: 24px;
+  margin-left: 0;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+code {
+  font-family: "SF Mono", Monaco, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--accent-color);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+pre code {
+  display: block;
+  padding: 16px;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+/* --- FOOTER --- */
+footer {
+  margin-top: 120px;
+  padding-top: 40px;
+  border-top: 1px solid var(--accent-color);
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+footer a:hover {
+  color: var(--hover-color);
+}
+
+/* --- RESPONSIVE DESIGN (UPDATED: Flex Order Fix) --- */
 @media (max-width: 600px) {
+  
+  body {
+    padding: 130px 16px 40px;
+  }
 
-  body { padding: 80px 16px 40px; }
-
+  /* 1. THE LAYOUT ENGINE */
   .header-content {
-    padding: 16px;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  /* Hide nav entirely on mobile */
-  .main-nav {
-    display: none !important; /* Override the scrolled transform too */
-  }
-
-  .header-right {
+    padding: 15px 16px; /* Default comfortable padding */
     display: flex;
-    align-items: center;
+    flex-wrap: wrap; /* Allows the Nav to drop to the next line */
+    align-items: center; /* VERTICAL CENTER: This is the alignment fix */
+    justify-content: space-between;
     gap: 0;
   }
 
-  .title h1 { font-size: 22px; }
+  /* 2. UNLOCK THE TOGGLE BUTTON */
+  /* This dissolves the container so Nav and Toggle become direct children */
+  .header-right {
+    display: contents; 
+  }
 
+  /* 3. ORDERING ITEMS */
+  
+  /* Left: The Title */
+  .title {
+    order: 1;
+    flex-grow: 1; /* Takes up available space */
+    display: flex;
+    align-items: center;
+    /* Explicit height matches toggle for perfect baseline alignment */
+    height: 36px; 
+  }
+  
+  /* Right: The Toggle */
+  .theme-toggle {
+    order: 2;
+    position: static; /* No absolute positioning needed anymore */
+    margin: 0;
+    height: 36px; 
+    width: 36px;
+  }
+
+  /* Bottom: The Navigation */
+  .main-nav {
+    order: 3;
+    width: 100%; /* Forces a new line */
+    margin-top: 15px; /* Distance from the Title/Toggle row */
+    padding-left: 0;
+    display: flex;
+    gap: 20px;
+    
+    /* Animation setup for fading out */
+    transition: opacity 0.3s ease, margin 0.3s ease, max-height 0.3s ease;
+    opacity: 1;
+    max-height: 50px; /* Approximate height of nav */
+    overflow: hidden;
+  }
+
+  /* --- TEXT SIZING --- */
+  .title-link {
+    line-height: 1;
+  }
+
+  .title h1 {
+    font-size: 26px;
+    line-height: 1;
+    margin: 0;
+  }
+  
   .verified-badge {
-    width: 15px; height: 15px; margin-left: 4px;
+    width: 17px;
+    height: 17px;
+    margin-left: 5px;
+  }
+  
+  .nav-link {
+    font-size: 15px;
+    padding: 5px 0;
   }
 
+  /* --- SCROLLING BEHAVIOR --- */
+  
+  /* Step 1: Shrink the container padding */
   .site-header.scrolled .header-content {
-    padding: 12px 16px;
+    padding: 10px 16px;
+  }
+  
+  /* Step 2: Hide the Navigation completely */
+  .site-header.scrolled .main-nav {
+    opacity: 0;
+    pointer-events: none;
+    margin-top: 0;
+    max-height: 0; /* Smoothly collapses the space */
   }
 
-  .bottom-nav-grid { flex-direction: column; gap: 20px; text-align: center; }
+  /* Step 3: Resize Title Text */
+  .site-header.scrolled .title h1 {
+    font-size: 22px;
+  }
+  
+  /* Step 4: Adjust Badge */
+  .site-header.scrolled .verified-badge {
+    width: 15px;
+    height: 15px;
+  }
+  
+  ul.blog-posts li a { font-size: 20px; }
+  ul.blog-posts li time { font-size: 13px; }
 }
